@@ -143,4 +143,69 @@ int main()
 			graph[B][A] = C;
 
 		}
-		
+		//int min = INF;
+		for (int i = 0; i < n; i++)
+		{
+
+			for (int j = i + 1; j < n; j++)
+			{
+				count = 0;
+				path = findpaths(g, graph, i, j, n, m);
+				//for (int i = 0; i < path.size(); i++)
+				//cout << path[i] << endl;
+				//cout << "*******" << endl;
+
+				if (path.size() > 2)
+				{
+					for (int u = 0; u < path.size(); u++)
+					{
+						if (path[u] == i)
+							count++;
+						if (path[u] != i && path[u] != j)
+						{
+							for (int d = 0; d < n; d++)
+							{
+								if (i != d && j != d)
+								{
+									if (path[u] == d)
+									{
+										arr2[d] += 1;
+									}
+								}
+							}
+						}
+
+					}
+					for (int d = 0; d < n; d++)
+					{
+						arr2[d] = (double)arr2[d] / count;
+						arr[d] += arr2[d];
+						arr2[d] = 0;
+					}
+				}
+			}
+		}
+		for (int i = 0; i < n; i++)
+		{
+			cout << setprecision(12) << fixed;
+			cout << arr[i] << '\n';
+		}
+
+		ofstream myfile;
+		myfile.open("/Users/Galal/source/repos/PythonApplication1/PythonApplication1/sh.txt");
+		myfile << n << endl;
+		myfile << m << endl;
+		for (int i = 0; i < m; i++)
+		{
+			myfile << a[i] << endl;
+			myfile << b[i] << endl;
+			myfile << c[i] << endl;
+			myfile << (arr[a[i]]+1) << endl;
+			myfile << (arr[b[i]]+1) << endl;
+		}
+
+		myfile.close();
+		//cin >> n;
+	}
+	return 0;
+}
