@@ -1,0 +1,71 @@
+#include<iostream>
+#include <string>
+#include <stack>
+#include <cstring>
+#include <vector>
+#include<ostream>
+#include <queue>
+#include<functional>
+#include<fstream>
+#include<iomanip>
+#define INF 1e9
+using namespace std;
+
+int isNotVisited(int x, vector<int>& path)
+{
+	int size = path.size();
+	for (int i = 0; i < size; i++)
+		if (path[i] == x)
+			return 0;
+	return 1;
+}
+
+vector<int> findpaths(vector<vector<int> >&g, int**graph, int src, int dst, int n, int m)
+{
+	queue<vector<int> > q;
+	vector<int> path;
+	vector<int> path2;
+	vector<vector<int>> curr_paths(n*m);
+	vector<int> Dis;
+	vector<int>min_i;
+	int index = 0;
+	int min_index;
+	int min = INF;
+	path.push_back(src);
+	q.push(path);
+	while (!q.empty())
+	{
+		path = q.front();
+		q.pop();
+		int last = path[path.size() - 1];
+		if (last == dst)
+		{
+			int dis = 0;
+			int size = path.size();
+			//	curr_paths.resize(n,vector<int>(size));
+			for (int i = 0; i < size - 1; i++)
+			{
+				curr_paths[index].push_back(path[i]);
+				dis += graph[path[i]][path[i + 1]];
+			}
+			curr_paths[index].push_back(path[size - 1]);
+			Dis.push_back(dis);
+			index++;
+			//cout << "size1= " << curr_paths.size() << endl;
+			if (index >= curr_paths.size())
+				curr_paths.resize(2 * curr_paths.size());
+			//cout << "size2= " << curr_paths.size() << endl;
+		}
+
+		for (int i = 0; i < g[last].size(); i++)
+		{
+			if (isNotVisited(g[last][i], path))
+			{
+				vector<int> newpath(path);
+				newpath.push_back(g[last][i]);
+				q.push(newpath);
+			}
+		}
+	}
+
+	
