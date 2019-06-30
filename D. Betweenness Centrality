@@ -67,5 +67,80 @@ vector<int> findpaths(vector<vector<int> >&g, int**graph, int src, int dst, int 
 			}
 		}
 	}
+	for (int y = 0; y < Dis.size(); y++)
+	{
+		if (Dis[y] < min)
+		{ 
+			min = Dis[y];
+			min_index = y;
 
-	
+			while (!min_i.empty())
+				min_i.pop_back();
+			min_i.push_back(y);
+			
+		
+		}
+		else if (Dis[y] == min)
+		{
+			min_i.push_back(y);
+		}
+	}
+	for (int i = 0; i < min_i.size(); i++)
+	{
+		for (int j = 0; j < curr_paths[min_i[i]].size(); j++)
+		{
+			path2.push_back(curr_paths[min_i[i]][j]);
+
+		}
+	}
+
+
+	return path2;
+}
+
+int main()
+{
+	int n, m, A, B, C, count = 0;
+	int dis = 0;
+	vector <int> path;
+	double *arr, *arr2;
+	double x;
+	int *a, *b, *c;
+	cin >> n >> m;
+	a = new int[m];
+	b = new int[m];
+	c = new int[m];
+
+	if ((2 <= n) && (n <= 15) && (n - 1 <= m) && (m <= n * (n - 1) / 2))
+	{
+		arr = new double[n];
+		arr2 = new double[n];
+		for (int i = 0; i < n; i++)
+		{
+			arr[i] = 0;
+			arr2[i] = 0;
+		}
+		vector<vector<int> > g(n);
+		int ** graph;
+		graph = new int*[n];
+		for (int i = 0; i < n; i++)
+		{
+			graph[i] = new int[n];
+			for (int j = 0; j < n; j++)
+				graph[i][j] = 0;
+		}
+
+
+		for (int i = 0; i < m; i++)
+		{
+			cin >> A >> B  >> C;
+			a[i] = A;
+			b[i] = B;
+			c[i] = C;
+			g[A].push_back(B);
+			g[B].push_back(A);
+			graph[A][B] = C;
+			graph[B][A] = C;
+
+		}
+		
