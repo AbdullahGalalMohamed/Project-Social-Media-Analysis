@@ -18,4 +18,24 @@ if __name__== "__main__":
   for i in range(int(data[1])):
      G.add_edge(data[2+counter],data[3+counter] , weight=int(data[4+counter]))
      flag1 = True
+     flag2 = True
+     for j in node :
+         if  data[2+counter]==j :
+             flag1 = False
+         if data[3+counter]==j :
+             flag2 = False
+     if flag1 or counter==0 :
+        index.append(float(data[5+counter])*500)
+        node.append(data[2+counter])
+        
+     if flag2 or counter==0 :
+        index.append(float(data[6+counter])*500)
+        node.append(data[3+counter])
+     counter += 5
+     
+pos=nx.spring_layout(G)
+nx.draw(G,pos,with_labels=True ,node_size=index )
+nx.draw_networkx_edge_labels(G,pos)
+plt.draw()
+plt.show()
      
