@@ -58,3 +58,62 @@ int flag = 1;
 int main()
 {
 	int n, m, i, j, sum = 0;
+        int A, B, C;
+	double out;
+
+	int *a, *b, *c;
+	double *arr;
+
+	cin >> n;  //number of element
+	cin >> m; // number of edges 
+	//int **arr = new int*[n];
+	vector<vector<pair<int, int> > > adj_list(n*n);
+	arr = new double[n];
+	a = new int[m];
+	b = new int[m];
+	c = new int[m];
+
+
+	for (i = 0; i < m; i++)
+	{
+		cin >> A;
+		a[i] = A;
+		cin >> B;
+		b[i] = B;
+		cin >> C;
+		c[i] = C;
+		adj_list[A].push_back(make_pair(B, C));
+		adj_list[B].push_back(make_pair(A, C));
+	}
+
+
+	for (int i = 0; i < n; i++)
+	{
+		vector<int> distance = shortest_distance(i, adj_list);
+		sum = 0;
+		for (int j = 0; j < distance.size(); j++)
+			if (distance[j] != INF && distance[j] != 0)
+				sum += distance[j];
+		out = (n - 1) / (double)sum;
+		cout << out << '\n';
+		arr[i] = out * 4;
+	}
+
+	ofstream myfile;
+	myfile.open("/Users/Galal/source/repos/PythonApplication1/PythonApplication1/sh.txt");
+	myfile << n << endl;
+	myfile << m << endl;
+	for (int i = 0; i < m; i++)
+	{
+		myfile << a[i] << endl;
+		myfile << b[i] << endl;
+		myfile << c[i] << endl;
+		myfile << arr[a[i]] << endl;
+		myfile << arr[b[i]] << endl;
+	}
+
+	myfile.close();
+
+
+	return 0;
+}
