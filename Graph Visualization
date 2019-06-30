@@ -1,0 +1,21 @@
+import networkx as nx
+import matplotlib.pyplot as plt 
+G=nx.Graph()
+data=[]
+index=[]
+node=[]
+def main():
+   
+    f=open("sh.txt", "r")
+        
+    fl =f.readlines()
+    for x in fl:
+       data.append(x)
+
+if __name__== "__main__":
+  main()
+  counter=0
+  for i in range(int(data[1])):
+     G.add_edge(data[2+counter],data[3+counter] , weight=int(data[4+counter]))
+     flag1 = True
+     
